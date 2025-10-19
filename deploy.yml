@@ -13,11 +13,9 @@
       state: present
       update_cache: yes
   - name: Install Docker
-    become: true
     apt:
       name: docker.io
-      state: latest
-      updated_cache: yes
+      state: present
   - name: start docker service using systemctl
     command: sudo systemctl start docker
     become: yes
