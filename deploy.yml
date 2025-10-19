@@ -12,10 +12,10 @@
         - python3-pip
       state: present
       update_cache: yes
-  - name: Install Docker
-    apt:
-      name: docker.io
-      state: present
+  - name : Install Docker
+    command : sudo apt-get install -y docker.io
+    become : yes
+    become_user : root
   - name: start docker service using systemctl
     command: sudo systemctl start docker
     become: yes
