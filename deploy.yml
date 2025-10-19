@@ -6,11 +6,18 @@
   - name: apt updating
     command: sudo apt update
   - name: Install python and Pip
-    command: sudo apt install -y python-pip
-  - name: Installing Docker
-    command: sudo apt-get install -y docker.io
-    become: yes
-    become_user: root
+    apt:
+      name:
+        - python3
+        - python3-pip
+      state: present
+      update_cache: yes
+  - name: Install Docker
+    become: true
+    apt:
+      name: docker.io
+      state: latest
+      updated_cache: yes
   - name: start docker service using systemctl
     command: sudo systemctl start docker
     become: yes
