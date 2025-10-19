@@ -41,9 +41,12 @@ pipeline {
     }
     stage('Deploy Application using Ansible') {
       steps {
-        ansiblePlaybook become: true, credentialsId: 'sshid', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml', vaultTmpPath: ''
-            }
+        
+        sh '''
+          ansible-playbook -i /etc/ansible/hosts deploy.yml \
+          -b --become-user root --private-key /var/lib/jenkins/workspace/Insureme/deploy_key.pem -u ubuntu || true
+        '''
+      }
     }
-
   }
 }
